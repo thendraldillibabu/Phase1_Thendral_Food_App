@@ -1,0 +1,217 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+        Snackers Point 
+    </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script lang="javascript">
+            var menuArray = [  
+                ['F','Chicken Biriyan', '$12.99', '10' ],
+                ['F','Veg Briyani', '$10.99','8'],
+                ['F','Mutton Briyani','$15.99','7' ],
+                ['D','Mango Lassi','$6.99','6' ],
+                ['D','Diet Coke','$5.99','5' ],
+                ['D','Tea','$6.99' ,'7'],
+                ['D','Coffee','$6.99','8' ],
+                ['C','Veg Puff','$4.99','9' ],
+                ['C','Pani Puri','$4.99','10' ],
+                ['c','Samosa','$3.99','8' ]
+                 ];
+
+                 var menuArray1 = [  
+                { id: 'F',food:'Chicken Biriyan',price:'$12.99',rating:'10' },
+                {id: 'F',food:'Veg Briyani',price:'$10.99',rating:'8'},
+                { id:'F',food:'Mutton Briyani',price:'$15.99',rating:'7' },
+                {id:'D',food:'Mango Lassi',price:'$6.99',rating:'6' },
+                {id:'D',food:'Diet Coke',price:'$5.99',rating:'5' },
+                {id:'D',food:'Tea',price:'$6.99' ,rating:'7'},
+                {id:'D',food:'Coffee',price:'$6.99',rating:'8' },
+                {id:'C',food:'Veg Puff',price:'$4.99',rating:'9' },
+                {id:'C',food:'Pani Puri',price:'$4.99',rating:'10' },
+                {id:'c',food:'Samosa',price:'$3.99',rating:'8' }
+                 ];
+               
+               
+            var selectedArray=[];
+
+            function menuChange() {
+                var ihtml="";
+                var innHtml="";
+                var isSelectedArray = false;
+                selectedArray = [];
+
+                for(var i=0;i<menuArray.length;i++)
+                {
+                    if((fd.value=='Food')&&(menuArray[i][0]=='F'))
+                    {
+                        isSelectedArray = true;
+                    } 
+                    else if((fd.value=='Drink')&&(menuArray[i][0]=='D'))
+                    {
+                        isSelectedArray = true;
+                    } 
+                    else if((fd.value=='Chatt')&&(menuArray[i][0]=='C'))
+                    {
+                        isSelectedArray = true;
+                    } 
+                    else
+                    {
+                        isSelectedArray=false;
+                    }
+
+                    if(isSelectedArray)
+                    {
+                        if(price.value == '<$10')
+                        {
+                            if(menuArray[i][2] <= '$10' )
+                            {
+                                isSelectedArray = true;
+                            }
+                            else
+                            {
+                                isSelectedArray = false;
+                            }
+                        }
+                        else if(price.value == '$10 to $20')
+                        {
+                            if((menuArray[i][2] <= '$20') && (menuArray[i][2] >= '$10') )
+                            {
+                                isSelectedArray = true;
+                            }
+                            else
+                            {
+                                isSelectedArray = false;
+                            }
+                        }
+                        else if(price.value == '>$30')
+                        {
+                            if(menuArray[i][2] >= '$30' )
+                            {   
+                                isSelectedArray = true;
+                            } 
+                            else
+                            {
+                                isSelectedArray = false;
+                            }
+                        }
+                        else{
+                            isSelectedArray = false;
+                        }
+                    }
+
+                    if(isSelectedArray)
+                    {
+                        if(rating.value == menuArray[i][3] )
+                        {
+                            isSelectedArray = true;
+                        }
+                        else
+                        {
+                            isSelectedArray = false;
+                        }
+                    }
+
+                    if(isSelectedArray == true)
+                    {
+                        selectedArray.push(menuArray[i]);
+                        isSelectedArray = false;
+                    }
+                  }
+
+
+                  for(var i=0 ;i<selectedArray.length;i++)
+                  {
+                   
+                    const dTag = document.createElement("div");
+                    const lTag=document.createElement("label");
+                    lTag.setAttribute("lbel",selectedArray[i][1]);
+                    const priceDivTag=document.createElement("div");
+                    const ratingDivTag=document.createElement("div");
+                    const buttonTag=document.createElement("button");
+
+                    lTag.id ="lbl"+i;
+                    lTag.value = selectedArray[i][1];
+                    priceDivTag.id = "priceDiv" + i;
+                    priceDivTag.value =selectedArray[i][2] ;
+                    ratingDivTag.id = "ratingDiv" + i;
+                    ratingDivTag.value = selectedArray[i][3] ;
+                    buttonTag.id= "btn" + i;
+                    buttonTag.value="Add to Cart";
+
+                    dTag.appendChild(lTag);
+                    document.getElementById("menuList").appendChild(dTag);
+                    document.getElementById("menuList").appendChild(priceDivTag);
+                    document.getElementById("menuList").appendChild(ratingDivTag);
+                    document.getElementById("menuList").appendChild(buttonTag);
+                  }
+
+                  alert(document.getElementById("lbel").value);
+                }
+      </script>
+</head>
+<style>
+    .text-large {
+        font-size: 350%;
+    }
+    .text-medium {
+        font-size: 200%;
+    }
+    .fntSize {
+        font-size: 150%;
+    }
+</style>
+<body onLoad="menuChange()">
+<form  >
+<div class="col-md-8">
+    <div  >
+        <div class="text text-center text-large">
+        Snackers Point 
+        </div>
+        <div>
+        <img width="700px" height="300px" src="img/MainImage.jpeg">
+        </div>
+        <br>
+        <div class="fntSize">
+            Menu<select id="fd" onchange="menuChange(this)">
+                <option value="Food" selected>Food</option>
+                <option value="Drink">Drink</option>
+                <option value="Chatt">Chatt</option>
+            </select>
+            Price<select id="price" onchange="menuChange(this)" >
+                <option><$10</option>
+                <option selected>$10 to $20</option>
+                <option>>$30</option>
+            </select>
+            <span class="glyphicon glyphicon-star"></span>
+            Rating<select id="rating" onchange="menuChange(this)">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option selected value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <script lang="javascript">
+
+        </script>
+
+        <div class="col-md-4" id="menuList">
+           
+        </div>
+    </div>
+</div>
+<div class="col-md-4 text-medium">
+    Your Checkout
+</div>
+</form>
+</body>
+</html>
